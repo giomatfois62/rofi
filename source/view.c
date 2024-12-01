@@ -212,6 +212,18 @@ static int lev_sort(const void *p1, const void *p2, void *arg) {
   return distances[*a] - distances[*b];
 }
 
+static void screenshot_taken_user_callback(const char *path) {
+  if (config.on_screenshot_taken == NULL)
+    return;
+
+  char **args = NULL;
+  int argv = 0;
+  helper_parse_setup(config.on_screenshot_taken, &args, &argv, "{path}",
+                                        path, (char *)0);
+  if (args != NULL)
+    helper_execute(NULL, args, "", config.on_screenshot_taken, NULL);
+}
+
 /**
  * Stores a screenshot of Rofi at that point in time.
  */
@@ -271,6 +283,7 @@ void rofi_capture_screenshot(void) {
         g_warning("Failed to produce screenshot '%s', got error: '%s'", fpath,
                   cairo_status_to_string(status));
       }
+      screenshot_taken_user_callback(fpath);
     }
     cairo_destroy(draw);
   }
@@ -1285,6 +1298,27 @@ inline static void rofi_view_nav_last(RofiViewState *state) {
   // state->selected = state->filtered_lines - 1;
   listview_set_selected(state->list_view, -1);
 }
+static void selection_changed_user_callback(unsigned int index, RofiViewState *state) {
+  if (config.on_selection_changed == NULL)
+    return;
+
+  static int last_index = -1;
+  if (index >= state->filtered_lines)
+    return;
+  if (last_index != index) {
+    last_index = index;
+    int fstate = 0;
+    char *text = mode_get_display_value(state->sw, state->line_map[index],
+                                          &fstate, NULL, TRUE);
+    char **args = NULL;
+    int argv = 0;
+    helper_parse_setup(config.on_selection_changed, &args, &argv, "{entry}",
+                                          text, (char *)0);
+    if (args != NULL)
+      helper_execute(NULL, args, "", config.on_selection_changed, NULL);
+    g_free(text);
+  }
+}
 static void selection_changed_callback(G_GNUC_UNUSED listview *lv,
                                        unsigned int index, void *udata) {
   RofiViewState *state = (RofiViewState *)udata;
@@ -1295,7 +1329,6 @@ static void selection_changed_callback(G_GNUC_UNUSED listview *lv,
                                           &fstate, NULL, TRUE);
       textbox_text(state->tb_current_entry, text);
       g_free(text);
-
     } else {
       textbox_text(state->tb_current_entry, "");
     }
@@ -1312,6 +1345,7 @@ static void selection_changed_callback(G_GNUC_UNUSED listview *lv,
       icon_set_surface(state->icon_current_entry, NULL);
     }
   }
+  selection_changed_user_callback(index, state);
 }
 static void update_callback(textbox *t, icon *ico, unsigned int index,
                             void *udata, TextBoxFontType *type, gboolean full) {
@@ -1882,7 +1916,6 @@ static void rofi_view_trigger_global_action(KeyBindingAction action) {
       // Nothing entered and nothing selected.
       state->retv = MENU_CUSTOM_INPUT;
     }
-
     state->quit = TRUE;
     break;
   }
@@ -2086,8 +2119,43 @@ void rofi_view_handle_mouse_motion(RofiViewState *state, gint x, gint y,
   }
 }
 
+static void rofi_quit_user_callback(RofiViewState *state) {
+  if (state->retv & MENU_OK) {
+    if (config.on_entry_accepted == NULL)
+      return;
+    int fstate = 0;
+    unsigned int selected = listview_get_selected(state->list_view);
+    // TODO: handle custom text
+    if (selected >= state->filtered_lines)
+      return;
+    // Pass selected text to custom command
+    char *text = mode_get_display_value(state->sw, state->line_map[selected],
+                                          &fstate, NULL, TRUE);
+    char **args = NULL;
+    int argv = 0;
+    helper_parse_setup(config.on_entry_accepted, &args, &argv, "{entry}",
+                                          text, (char *)0);
+    if (args != NULL)
+      helper_execute(NULL, args, "", config.on_entry_accepted, NULL);
+    g_free(text);
+  } else if(state->retv & MENU_CANCEL) {
+    if (config.on_menu_canceled == NULL)
+      return;
+    helper_execute_command(NULL, config.on_menu_canceled, FALSE, NULL);
+  } else if (state->retv & MENU_NEXT ||
+             state->retv & MENU_PREVIOUS ||
+             state->retv & MENU_QUICK_SWITCH ||
+             state->retv & MENU_COMPLETE) {
+    if (config.on_mode_changed == NULL)
+      return;
+    // TODO: pass mode name to custom command
+    helper_execute_command(NULL, config.on_mode_changed, FALSE, NULL);
+  }
+}
 void rofi_view_maybe_update(RofiViewState *state) {
   if (rofi_view_get_completed(state)) {
+    // Exec custom user commands
+    rofi_quit_user_callback(state);
     // This menu is done.
     rofi_view_finalize(state);
     // If there a state. (for example error) reload it.
@@ -2571,6 +2639,18 @@ RofiViewState *rofi_view_create(Mode *sw, const char *input,
   return state;
 }
 
+static void rofi_error_user_callback(const char *msg) {
+  if (config.on_menu_error == NULL)
+    return;
+
+  char **args = NULL;
+  int argv = 0;
+  helper_parse_setup(config.on_menu_error, &args, &argv, "{error}",
+                                        msg, (char *)0);
+  if (args != NULL)
+    helper_execute(NULL, args, "", config.on_menu_error, NULL);
+}
+
 int rofi_view_error_dialog(const char *msg, int markup) {
   RofiViewState *state = __rofi_view_state_create();
   state->retv = MENU_CANCEL;
@@ -2607,6 +2687,9 @@ int rofi_view_error_dialog(const char *msg, int markup) {
   if (xcb->sncontext != NULL) {
     sn_launchee_context_complete(xcb->sncontext);
   }
+
+  // Exec custom command
+  rofi_error_user_callback(msg);
 
   // Set it as current window.
   rofi_view_set_active(state);
