@@ -1302,28 +1302,26 @@ static void selection_changed_user_callback(unsigned int index, RofiViewState *s
   if (config.on_selection_changed == NULL)
     return;
 
-  static unsigned int last_index = UINT32_MAX;
-  if (index >= state->filtered_lines)
-    return;
-
-  unsigned int real_index = state->line_map[index];
-  if (last_index != real_index) {
-    last_index = real_index;
-    int fstate = 0;
-    char *text = mode_get_display_value(state->sw, real_index,
-                                          &fstate, NULL, TRUE);
-    char **args = NULL;
-    int argv = 0;
-    helper_parse_setup(config.on_selection_changed, &args, &argv, "{entry}",
-                                          text, (char *)0);
-    if (args != NULL)
-      helper_execute(NULL, args, "", config.on_selection_changed, NULL);
-    g_free(text);
-  }
+  int fstate = 0;
+  char *text = mode_get_display_value(state->sw, state->line_map[index],
+                                        &fstate, NULL, TRUE);
+  char **args = NULL;
+  int argv = 0;
+  helper_parse_setup(config.on_selection_changed, &args, &argv, "{entry}",
+                                        text, (char *)0);
+  if (args != NULL)
+    helper_execute(NULL, args, "", config.on_selection_changed, NULL);
+  g_free(text);
 }
 static void selection_changed_callback(G_GNUC_UNUSED listview *lv,
                                        unsigned int index, void *udata) {
   RofiViewState *state = (RofiViewState *)udata;
+  if (index < state->filtered_lines) {
+    if (state->previous_line != state->line_map[index]) {
+      selection_changed_user_callback(index, state);
+      state->previous_line = state->line_map[index];
+    }
+  }
   if (state->tb_current_entry) {
     if (index < state->filtered_lines) {
       int fstate = 0;
@@ -1347,7 +1345,6 @@ static void selection_changed_callback(G_GNUC_UNUSED listview *lv,
       icon_set_surface(state->icon_current_entry, NULL);
     }
   }
-  selection_changed_user_callback(index, state);
 }
 static void update_callback(textbox *t, icon *ico, unsigned int index,
                             void *udata, TextBoxFontType *type, gboolean full) {
@@ -2552,6 +2549,7 @@ RofiViewState *rofi_view_create(Mode *sw, const char *input,
   state->menu_flags = menu_flags;
   state->sw = sw;
   state->selected_line = UINT32_MAX;
+  state->previous_line = UINT32_MAX;
   state->retv = MENU_CANCEL;
   state->distance = NULL;
   state->quit = FALSE;
