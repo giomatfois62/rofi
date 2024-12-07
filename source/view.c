@@ -1302,13 +1302,15 @@ static void selection_changed_user_callback(unsigned int index, RofiViewState *s
   if (config.on_selection_changed == NULL)
     return;
 
-  static int last_index = -1;
+  static unsigned int last_index = UINT32_MAX;
   if (index >= state->filtered_lines)
     return;
-  if (last_index != index) {
-    last_index = index;
+
+  unsigned int real_index = state->line_map[index];
+  if (last_index != real_index) {
+    last_index = real_index;
     int fstate = 0;
-    char *text = mode_get_display_value(state->sw, state->line_map[index],
+    char *text = mode_get_display_value(state->sw, real_index,
                                           &fstate, NULL, TRUE);
     char **args = NULL;
     int argv = 0;
