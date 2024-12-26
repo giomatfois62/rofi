@@ -148,11 +148,15 @@ Special thanks goes to:
   * vE5li
   * Yuta Katayama
   * Danny Colin
+  * xsy420
 
 Apologies if I mistyped or missed anybody.
 
 # Changelog
-
+* [CI] Fix CI build for updated runner.
+* [DOC] Add mouse button names to documentation.
+* [Doc] Clarify documentation for User Script directory. (#2043)
+* [Build] Add shadow to build system. (#2042, #2036)
 * [Textbox] Use FontMetrics font height (if available) to get height
 * [Theme] Fixes recursion in double_inside
 * Try to support modifiers in XIM again (#2015)
