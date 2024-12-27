@@ -22,6 +22,14 @@ nav:
     - Script: current/rofi-script.5.markdown
     - Debugging: current/rofi-debugging.5.markdown
     - Keys: current/rofi-keys.5.markdown
+    - Thumbnails: current/rofi-thumbnails.5.markdown
+  - 1.7.6:
+    - Rofi: 1.7.6/rofi.1.markdown 
+    - Themes: 1.7.6/rofi-theme.5.markdown
+    - Dmenu: 1.7.6/rofi-dmenu.5.markdown
+    - Script: 1.7.6/rofi-script.5.markdown
+    - Debugging: 1.7.6/rofi-debugging.5.markdown
+    - Keys: 1.7.6/rofi-keys.5.markdown
   - 1.7.5:
     - Rofi: 1.7.5/rofi.1.markdown 
     - Themes: 1.7.5/rofi-theme.5.markdown
