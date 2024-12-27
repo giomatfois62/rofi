@@ -9,6 +9,7 @@
 **Please match the documentation and scripts to the version of rofi used**
 
 - [next version](https://github.com/davatorium/rofi)
+- [1.7.6](https://github.com/davatorium/rofi/tree/1.7.6)
 - [1.7.5](https://github.com/davatorium/rofi/tree/1.7.5)
 - [1.7.4](https://github.com/davatorium/rofi/tree/1.7.4)
 - [1.7.3](https://github.com/davatorium/rofi/tree/1.7.3)
@@ -21,7 +22,7 @@ Also see the locally installed documentation (manpages).
 <h1 align="center"> Rofi </h1>
 <p align="center"><i>A window switcher, Application launcher and dmenu replacement</i>.</p>
 
-https://user-images.githubusercontent.com/84911063/139428874-fe182dd6-82c6-49b8-8da1-920ddda3d1ed.mp4
+<https://user-images.githubusercontent.com/84911063/139428874-fe182dd6-82c6-49b8-8da1-920ddda3d1ed.mp4>
 
 **Rofi** started as a clone of simpleswitcher, written by [Sean
 Pringle](http://github.com/seanpringle/simpleswitcher) - a popup window
@@ -41,15 +42,15 @@ provided by an external script.
 
 Rofi is not:
 
--   A UI toolkit.
+- A UI toolkit.
 
--   A library to be used in other applications.
+- A library to be used in other applications.
 
--   An application that can support every possible use-case. It tries to be
+- An application that can support every possible use-case. It tries to be
     generic enough to be usable by everybody.
-    - Specific functionality can be added using scripts or plugins, many exists.
+  - Specific functionality can be added using scripts or plugins, many exists.
 
--   Just a dmenu replacement. The dmenu functionality is a nice 'extra' to
+- Just a dmenu replacement. The dmenu functionality is a nice 'extra' to
     **rofi**, not its main purpose.
 
 ## Table of Contents
@@ -58,7 +59,7 @@ Rofi is not:
 - [Modes](#modes)
 - [Manpages](#manpage)
 - [Installation](#installation)
-- [Quickstart](#quickstart) 
+- [Quickstart](#quickstart)
   - [Usage](#usage)
   - [Configuration](#configuration)
   - [Themes](#themes)
@@ -70,47 +71,47 @@ Rofi is not:
 
 Its main features are:
 
--   Fully configurable keyboard navigation
+- Fully configurable keyboard navigation
 
--   Type to filter
-    - Tokenized: type any word in any order to filter
-    - Case insensitive (togglable)
-    - Support for fuzzy-, regex-, prefix-, and glob-matching
+- Type to filter
+  - Tokenized: type any word in any order to filter
+  - Case insensitive (togglable)
+  - Support for fuzzy-, regex-, prefix-, and glob-matching
 
--   UTF-8 enabled
-    - UTF-8-aware string collating
-    - International keyboard support (\`e -> è)
+- UTF-8 enabled
+  - UTF-8-aware string collating
+  - International keyboard support (\`e -> è)
 
--   RTL language support
+- RTL language support
 
--   Cairo drawing and Pango font rendering
+- Cairo drawing and Pango font rendering
 
--   Built-in modes:
-    -   Window switcher mode
-        - EWMH compatible WM
-        - Work arounds for i3,bspwm
+- Built-in modes:
+  - Window switcher mode
+    - EWMH compatible WM
+    - Work arounds for i3,bspwm
 
-    -   Application launcher
+  - Application launcher
 
-    -   Desktop file application launcher
+  - Desktop file application launcher
 
-    -   SSH launcher mode
+  - SSH launcher mode
 
-    -   File browser
+  - File browser
 
-    -   Combi mode, allowing several modes to be merged into one list
+  - Combi mode, allowing several modes to be merged into one list
 
--   History-based ordering — last 25 choices are ordered on top based on use
+- History-based ordering — last 25 choices are ordered on top based on use
     (optional)
 
--   Levenshtein distance or fzf like sorting of matches (optional)
+- Levenshtein distance or fzf like sorting of matches (optional)
 
--   Drop-in dmenu replacement
-    - Many added improvements
+- Drop-in dmenu replacement
+  - Many added improvements
 
--   Easily extensible using scripts and plugins
+- Easily extensible using scripts and plugins
 
--   Advanced Theming
+- Advanced Theming
 
 ## Modes
 
@@ -120,22 +121,22 @@ extended by scripts (either called from
 
 Below is a list of the different modes:
 
--   **run**: launch applications from $PATH, with option to launch in terminal.
+- **run**: launch applications from $PATH, with option to launch in terminal.
 
--   **drun**: launch applications based on desktop files. It tries to be
+- **drun**: launch applications based on desktop files. It tries to be
     compliant to the XDG standard.
 
--   **window**: Switch between windows on an EWMH compatible window manager.
+- **window**: Switch between windows on an EWMH compatible window manager.
 
--   **ssh**: Connect to a remote host via ssh.
+- **ssh**: Connect to a remote host via ssh.
 
--   **filebrowser**: A basic file-browser for opening files.
+- **filebrowser**: A basic file-browser for opening files.
 
--   **keys**: list internal keybindings.
+- **keys**: list internal keybindings.
 
--   **script**: Write (limited) custom mode using simple scripts.
+- **script**: Write (limited) custom mode using simple scripts.
 
--   **combi**: Combine multiple modes into one.
+- **combi**: Combine multiple modes into one.
 
 **Rofi** is known to work on Linux and BSD.
 
@@ -196,11 +197,11 @@ launcher:
 ```
 
 The modes to combine in combi mode.
-For syntax to `-combi-modes `, see `-modes`.
+For syntax to `-combi-modes`, see `-modes`.
 To get one merge view, of `window`,`run`, and `ssh`:
 
 ```bash
-	rofi -show combi -combi-modes "window,run,ssh" -modes combi
+ rofi -show combi -combi-modes "window,run,ssh" -modes combi
 ```
 
 ### Configuration
@@ -243,9 +244,9 @@ Default theme:
 
 ![default](https://raw.githubusercontent.com/davatorium/rofi/next/releasenotes/1.4.0/rofi-no-fzf.png)
 
-## Wiki 
+## Wiki
 
-| ❗ **The Wiki is currently unmaintained and might contain outdated data ** |
+| ❗ **The Wiki is currently unmaintained and might contain outdated data** |
 | --- |
 
 [Go to wiki](https://github.com/davatorium/rofi/wiki) .
