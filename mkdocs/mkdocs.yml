@@ -30,6 +30,7 @@ nav:
     - Script: 1.7.6/rofi-script.5.markdown
     - Debugging: 1.7.6/rofi-debugging.5.markdown
     - Keys: 1.7.6/rofi-keys.5.markdown
+    - Thumbnails: 1.7.6/rofi-thumbnails.5.markdown
   - 1.7.5:
     - Rofi: 1.7.5/rofi.1.markdown 
     - Themes: 1.7.5/rofi-theme.5.markdown
