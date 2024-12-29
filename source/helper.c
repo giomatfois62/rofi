@@ -27,12 +27,12 @@
  */
 
 /** The log domain for this helper. */
+#include "config.h"
 #define G_LOG_DOMAIN "Helper"
 
-#include "helper.h"
-#include "config.h"
 #include "display.h"
 #include "helper-theme.h"
+#include "helper.h"
 #include "rofi.h"
 #include "settings.h"
 #include "view.h"
@@ -141,6 +141,7 @@ static gchar *glob_to_regex(const char *input) {
   return r;
 }
 static gchar *fuzzy_to_regex(const char *input) {
+  char *retv = NULL;
   GString *str = g_string_new("");
   gchar *r = g_regex_escape_string(input, -1);
   gchar *iter;
@@ -164,8 +165,7 @@ static gchar *fuzzy_to_regex(const char *input) {
     first = 0;
   }
   g_free(r);
-  char *retv = str->str;
-  g_string_free(str, FALSE);
+  retv = g_string_free(str, FALSE);
   return retv;
 }
 
