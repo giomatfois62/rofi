@@ -377,7 +377,7 @@ static gboolean exec_dbus_entry(DRunModeEntry *e, const char *path) {
   if (!session) {
     g_warning("unable to connect to D-Bus: %s\n", error->message);
     g_error_free(error);
-    return false;
+    return FALSE;
   }
 
   object_path = app_path_for_id(e->app_id);
@@ -409,10 +409,10 @@ static gboolean exec_dbus_entry(DRunModeEntry *e, const char *path) {
               error->message);
     g_error_free(error);
     g_object_unref(session);
-    return false;
+    return FALSE;
   }
   g_object_unref(session);
-  return true;
+  return TRUE;
 }
 
 static void exec_cmd_entry(DRunModeEntry *e, const char *path) {
@@ -487,11 +487,11 @@ static void exec_cmd_entry(DRunModeEntry *e, const char *path) {
   /**
    * If its required to launch via dbus, do that.
    */
-  gboolean launched = false;
+  gboolean launched = FALSE;
   if (g_key_file_get_boolean(e->key_file, e->action, "DBusActivatable", NULL)) {
     launched = exec_dbus_entry(e, path);
   }
-  if (launched == false) {
+  if (launched == FALSE) {
     /** Fallback to old style if not set. */
 
     // Returns false if not found, if key not found, we don't want run in

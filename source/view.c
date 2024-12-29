@@ -1368,7 +1368,7 @@ static void update_callback(textbox *t, icon *ico, unsigned int index,
     textbox_font(t, *type);
   }
 }
-static void page_changed_callback() {
+static void page_changed_callback(void) {
   rofi_view_workers_finalize();
   rofi_view_workers_initialize();
 }
