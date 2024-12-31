@@ -1067,10 +1067,19 @@ int main(int argc, char *argv[]) {
     }
 
     if (config_path) {
-      if (rofi_theme_parse_file(config_path)) {
-        rofi_theme_free(rofi_theme);
-        rofi_theme = NULL;
+      // Try to resolve the path.
+      extern const char *rasi_theme_file_extensions[];
+      char *file2 =
+          helper_get_theme_path(config_path, rasi_theme_file_extensions, NULL);
+      char *filename = rofi_theme_parse_prepare_file(file2);
+      g_free(file2);
+      if (filename && g_file_test(filename, G_FILE_TEST_EXISTS)) {
+        if (rofi_theme_parse_file(filename)) {
+          rofi_theme_free(rofi_theme);
+          rofi_theme = NULL;
+        }
       }
+      g_free(filename);
     }
   }
   find_arg_str("-theme", &(config.theme));
@@ -1093,7 +1102,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (rofi_theme == NULL || rofi_theme->num_widgets == 0) {
-    g_warning("Failed to load theme. Try to load default: ");
+    g_debug("Failed to load theme. Try to load default: ");
     rofi_theme_parse_string("@theme \"default\"");
   }
   TICK_N("Load cmd config ");
