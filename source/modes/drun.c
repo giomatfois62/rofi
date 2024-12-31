@@ -25,10 +25,11 @@
  *
  */
 
-/** The log domain of this dialog. */
 #define G_LOG_DOMAIN "Modes.DRun"
-
 #include "config.h"
+/** The log domain of this dialog. */
+#include "glib.h"
+
 #ifdef ENABLE_DRUN
 #include <limits.h>
 #include <stdio.h>
@@ -43,6 +44,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <gio/gio.h>
 
 #include "helper.h"
 #include "history.h"
@@ -329,6 +332,89 @@ static void launch_link_entry(DRunModeEntry *e) {
     g_free(path);
   }
 }
+static gchar *app_path_for_id(const gchar *app_id) {
+  gchar *path;
+  gint i;
+
+  path = g_strconcat("/", app_id, NULL);
+  for (i = 0; path[i]; i++) {
+    if (path[i] == '.')
+      path[i] = '/';
+    if (path[i] == '-')
+      path[i] = '_';
+  }
+
+  return path;
+}
+static GVariant *app_get_platform_data(void) {
+  GVariantBuilder builder;
+  const gchar *startup_id;
+
+  g_variant_builder_init(&builder, G_VARIANT_TYPE_VARDICT);
+
+  if ((startup_id = g_getenv("DESKTOP_STARTUP_ID")))
+    g_variant_builder_add(&builder, "{sv}", "desktop-startup-id",
+                          g_variant_new_string(startup_id));
+
+  if ((startup_id = g_getenv("XDG_ACTIVATION_TOKEN")))
+    g_variant_builder_add(&builder, "{sv}", "activation-token",
+                          g_variant_new_string(startup_id));
+
+  return g_variant_builder_end(&builder);
+}
+
+static gboolean exec_dbus_entry(DRunModeEntry *e, const char *path) {
+  GVariantBuilder files;
+  GDBusConnection *session;
+  GError *error = NULL;
+  gchar *object_path;
+  GVariant *result;
+  GVariant *params = NULL;
+  const char *method = "Activate";
+  g_debug("Trying to launch desktop file using dbus activation.");
+
+  session = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, &error);
+  if (!session) {
+    g_warning("unable to connect to D-Bus: %s\n", error->message);
+    g_error_free(error);
+    return FALSE;
+  }
+
+  object_path = app_path_for_id(e->app_id);
+
+  g_variant_builder_init(&files, G_VARIANT_TYPE_STRING_ARRAY);
+
+  if (path != NULL) {
+    method = "Open";
+    params = g_variant_new("(as@a{sv})", &files, app_get_platform_data());
+  } else {
+    params = g_variant_new("(@a{sv})", app_get_platform_data());
+  }
+  if (path) {
+    GFile *file = g_file_new_for_commandline_arg(path);
+    g_variant_builder_add_value(
+        &files, g_variant_new_take_string(g_file_get_uri(file)));
+    g_object_unref(file);
+  }
+  result = g_dbus_connection_call_sync(
+      session, e->app_id, object_path, "org.freedesktop.Application", method,
+      params, G_VARIANT_TYPE_UNIT, G_DBUS_CALL_FLAGS_NONE, -1, NULL, &error);
+
+  g_free(object_path);
+
+  if (result) {
+    g_variant_unref(result);
+  } else {
+    g_warning("error sending %s message to application: %s\n", "Open",
+              error->message);
+    g_error_free(error);
+    g_object_unref(session);
+    return FALSE;
+  }
+  g_object_unref(session);
+  return TRUE;
+}
+
 static void exec_cmd_entry(DRunModeEntry *e, const char *path) {
   GError *error = NULL;
   GRegex *reg = g_regex_new("%[a-zA-Z%]", 0, 0, &error);
@@ -398,15 +484,26 @@ static void exec_cmd_entry(DRunModeEntry *e, const char *path) {
         g_key_file_get_string(e->key_file, e->action, "StartupWMClass", NULL);
   }
 
-  // Returns false if not found, if key not found, we don't want run in
-  // terminal.
-  gboolean terminal =
-      g_key_file_get_boolean(e->key_file, e->action, "Terminal", NULL);
-  if (helper_execute_command(exec_path, fp, terminal, sn ? &context : NULL)) {
-    char *drun_cach_path = g_build_filename(cache_dir, DRUN_CACHE_FILE, NULL);
-    // Store it based on the unique identifiers (desktop_id).
-    history_set(drun_cach_path, e->desktop_id);
-    g_free(drun_cach_path);
+  /**
+   * If its required to launch via dbus, do that.
+   */
+  gboolean launched = FALSE;
+  if (g_key_file_get_boolean(e->key_file, e->action, "DBusActivatable", NULL)) {
+    launched = exec_dbus_entry(e, path);
+  }
+  if (launched == FALSE) {
+    /** Fallback to old style if not set. */
+
+    // Returns false if not found, if key not found, we don't want run in
+    // terminal.
+    gboolean terminal =
+        g_key_file_get_boolean(e->key_file, e->action, "Terminal", NULL);
+    if (helper_execute_command(exec_path, fp, terminal, sn ? &context : NULL)) {
+      char *drun_cach_path = g_build_filename(cache_dir, DRUN_CACHE_FILE, NULL);
+      // Store it based on the unique identifiers (desktop_id).
+      history_set(drun_cach_path, e->desktop_id);
+      g_free(drun_cach_path);
+    }
   }
   g_free(wmclass);
   g_free(exec_path);

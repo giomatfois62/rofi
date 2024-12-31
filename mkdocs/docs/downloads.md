@@ -6,6 +6,11 @@ For development no tarball is released. Please follow the
 [Installation](../INSTALL/) instructions for obtaining and compiling
 development version.
 
+## [1.7.6](https://github.com/davatorium/rofi/releases/tag/1.7.6)
+
+- [tar.gz](https://github.com/davatorium/rofi/releases/download/1.7.6/rofi-1.7.6.tar.gz)
+- [tar.xz](https://github.com/davatorium/rofi/releases/download/1.7.6/rofi-1.7.6.tar.xz)
+
 ## [1.7.5](https://github.com/davatorium/rofi/releases/tag/1.7.5)
 
 - [tar.gz](https://github.com/davatorium/rofi/releases/download/1.7.5/rofi-1.7.5.tar.gz)
