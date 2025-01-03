@@ -186,7 +186,6 @@ WORD_ENV   [[:alpha:]_][[:alnum:]_]*
 COLOR_NAME [[:alpha:]]+
 STRING     \"{UANYN}*\"|\'{UANYN}*\'
 STRING_LIST \"{UANYNP1}*\"|\'{UANYNP2}*\'
-CHAR       \'({ASCN}|\\\\|\\\'|\\0)\'
 HEX        [[:xdigit:]]
 NUMBER     [[:digit:]]+
 UNARYMIN   -
@@ -522,7 +521,6 @@ if ( queue == NULL ) {
 <PROPERTIES,PROPERTIES_ARRAY,PROPERTIES_ENV,PROPERTIES_VAR_DEFAULT,MEDIA_CONTENT>{UNARYMIN}            { return T_MIN; }
 <PROPERTIES,PROPERTIES_ENV,PROPERTIES_VAR_DEFAULT>{STRING}                                             { yytext[yyleng-1] = '\0'; yylval->sval = g_strcompress(&yytext[1]); return T_STRING;}
 <PROPERTIES_ARRAY>{STRING_LIST}                                                                        { yytext[yyleng-1] = '\0'; yylval->sval = g_strcompress(&yytext[1]); return T_STRING;}
-<PROPERTIES,PROPERTIES_ARRAY,PROPERTIES_ENV,PROPERTIES_VAR_DEFAULT>{CHAR}                { yytext[yyleng-1] = '\0'; yylval->cval = g_strcompress(&yytext[1])[0]; return T_CHAR;}
 
 <PROPERTIES,PROPERTIES_ARRAY,PROPERTIES_ENV,PROPERTIES_VAR_DEFAULT>@{WORD}               {
     yylval->sval = g_strdup(yytext+1);
