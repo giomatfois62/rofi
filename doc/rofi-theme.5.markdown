@@ -195,9 +195,9 @@ newlines format are supported. But unix is preferred.
 
 C and C++ file comments are supported.
 
--   Anything after  `// ` and before a newline is considered a comment.
+- Anything after  `//` and before a newline is considered a comment.
 
--   Everything between `/*` and `*/` is a comment, this comment can span
+- Everything between `/*` and `*/` is a comment, this comment can span
     multiple lines.
 
 Comments can be nested and the C comments can be inline.
@@ -443,17 +443,17 @@ dynamic: false;
 
 **rofi** support a limited set of background-image formats.
 
--   Format: url("path to image");
+- Format: url("path to image");
 
--   Format: url("path to image", scale);
+- Format: url("path to image", scale);
     where scale is: none, both, width, height
 
--   Format: linear-gradient(stop color,stop1, color, stop2 color, ...);
+- Format: linear-gradient(stop color,stop1, color, stop2 color, ...);
 
--   Format: linear-gradient(to direction, stop color,stop1, color, stop2 color,
+- Format: linear-gradient(to direction, stop color,stop1, color, stop2 color,
     ...); where direction is:   top,left,right,bottom.
 
--   Format: linear-gradient(angle, stop color,stop1, color, stop2 color, ...);
+- Format: linear-gradient(angle, stop color,stop1, color, stop2 color, ...);
     Angle in deg,rad,grad (as used in color).
 
 Where the `path` is a string, and `stop` color is of type color.
@@ -463,42 +463,42 @@ Where the `path` is a string, and `stop` color is of type color.
 **rofi** supports the color formats as specified in the CSS standard (1,2,3 and
 some of CSS 4)
 
--   Format: `#{HEX}{3}` (rgb)
+- Format: `#{HEX}{3}` (rgb)
 
--   Format: `#{HEX}{4}` (rgba)
+- Format: `#{HEX}{4}` (rgba)
 
--   Format: `#{HEX}{6}` (rrggbb)
+- Format: `#{HEX}{6}` (rrggbb)
 
--   Format: `#{HEX}{8}` (rrggbbaa)
+- Format: `#{HEX}{8}` (rrggbbaa)
 
--   Format: `rgb[a]({INTEGER},{INTEGER},{INTEGER}[, {PERCENTAGE}])`
+- Format: `rgb[a]({INTEGER},{INTEGER},{INTEGER}[, {PERCENTAGE}])`
 
--   Format: `rgb[a]({INTEGER}%,{INTEGER}%,{INTEGER}%[, {PERCENTAGE}])`
+- Format: `rgb[a]({INTEGER}%,{INTEGER}%,{INTEGER}%[, {PERCENTAGE}])`
 
--   Format: `hsl[a]( {ANGLE}, {PERCENTAGE}, {PERCENTAGE} [, {PERCENTAGE}])`
+- Format: `hsl[a]( {ANGLE}, {PERCENTAGE}, {PERCENTAGE} [, {PERCENTAGE}])`
 
--   Format: `hwb[a]( {ANGLE}, {PERCENTAGE}, {PERCENTAGE} [, {PERCENTAGE}])`
+- Format: `hwb[a]( {ANGLE}, {PERCENTAGE}, {PERCENTAGE} [, {PERCENTAGE}])`
 
--   Format: `cmyk( {PERCENTAGE}, {PERCENTAGE}, {PERCENTAGE}, {PERCENTAGE} [,
+- Format: `cmyk( {PERCENTAGE}, {PERCENTAGE}, {PERCENTAGE}, {PERCENTAGE} [,
     {PERCENTAGE} ])`
 
--   Format: `{named-color} [ / {PERCENTAGE} ]`
+- Format: `{named-color} [ / {PERCENTAGE} ]`
 
 The white-space format proposed in CSS4 is also supported.
 
 The different values are:
 
--   `{HEX}` is a hexadecimal number ('0-9a-f' case insensitive).
+- `{HEX}` is a hexadecimal number ('0-9a-f' case insensitive).
 
--   `{INTEGER}` value can be between 0 and 255 or 0-100 when representing
+- `{INTEGER}` value can be between 0 and 255 or 0-100 when representing
     percentage.
 
--   `{ANGLE}` is the angle on the color wheel, can be in `deg`, `rad`, `grad`
+- `{ANGLE}` is the angle on the color wheel, can be in `deg`, `rad`, `grad`
     or `turn`. When no unit is specified, degrees is assumed.
 
--   `{PERCENTAGE}` can be between 0-1.0, or 0%-100%
+- `{PERCENTAGE}` can be between 0-1.0, or 0%-100%
 
--   `{named-color}` is one of the following colors:
+- `{named-color}` is one of the following colors:
 
     AliceBlue, AntiqueWhite, Aqua, Aquamarine, Azure, Beige, Bisque, Black,
     BlanchedAlmond, Blue, BlueViolet, Brown, BurlyWood, CadetBlue, Chartreuse,
@@ -532,6 +532,7 @@ background-color: #FF0000;
 border-color: rgba(0,0,1, 0.5);
 text-color: SeaGreen;
 ```
+
 or
 
 ```css
@@ -567,6 +568,7 @@ upsizing or wrapping. This will be re-enabled once fixed:
 
 Indicates how a line should be drawn.
 It currently supports:
+
 - `dash`:  a dashed line, where the gap is the same width as the dash
 - `solid`: a solid line
 
@@ -593,6 +595,7 @@ For example:
 ```css
    padding: 10%;
 ```
+
 On a full-HD (1920x1080) monitor, it defines a padding of 192 pixels on the left
 and right side and 108 pixels on the top and bottom.
 
@@ -617,9 +620,9 @@ It supports the following operations:
 - `modulo` : Modulo
 - `min`    : Minimum of lvalue or rvalue;
 - `max`    : Maximum of lvalue or rvalue;
-- `floor`  : Round down lvalue to the next multiple of rvalue 
-- `ceil`   : Round up lvalue to the next multiple of rvalue 
-- `round`  : Round lvalue to the next multiple of rvalue 
+- `floor`  : Round down lvalue to the next multiple of rvalue
+- `ceil`   : Round up lvalue to the next multiple of rvalue
+- `round`  : Round lvalue to the next multiple of rvalue
 
 It uses the C precedence ordering.
 
@@ -642,24 +645,24 @@ The different number of fields in the formats are parsed like:
 
 ### Border
 
--   Format: `{Integer}`
+- Format: `{Integer}`
 
--   Format: `{Distance}`
+- Format: `{Distance}`
 
--   Format: `{Distance} {Distance}`
+- Format: `{Distance} {Distance}`
 
--   Format: `{Distance} {Distance} {Distance}`
+- Format: `{Distance} {Distance} {Distance}`
 
--   Format: `{Distance} {Distance} {Distance} {Distance}`
+- Format: `{Distance} {Distance} {Distance} {Distance}`
 
--   Format: `{Distance} {Line style}`
+- Format: `{Distance} {Line style}`
 
--   Format: `{Distance} {Line style} {Distance} {Line style}`
+- Format: `{Distance} {Line style} {Distance} {Line style}`
 
--   Format: `{Distance} {Line style} {Distance} {Line style} {Distance} {Line
+- Format: `{Distance} {Line style} {Distance} {Line style} {Distance} {Line
     style}`
 
--   Format: `{Distance} {Line style} {Distance} {Line style} {Distance} {Line
+- Format: `{Distance} {Line style} {Distance} {Line style} {Distance} {Line
     style} {Distance} {Line style}`
 
 Borders are identical to padding, except that each distance field has a line
@@ -838,50 +841,50 @@ element selected {
 The default widgets available in **rofi** and the default hierarchic:
 
 - `window`
-  -   `overlay`: the overlay widget.
+  - `overlay`: the overlay widget.
 
-  -   `mainbox`: The mainbox box.
+  - `mainbox`: The mainbox box.
 
-   -   `inputbar`: The input bar box.
-       -   `box`: the horizontal @box packing the widgets
+  - `inputbar`: The input bar box.
+    - `box`: the horizontal @box packing the widgets
 
-          -   `case-indicator`: the case/sort indicator @textbox
+    - `case-indicator`: the case/sort indicator @textbox
 
-          -   `prompt`: the prompt @textbox
+    - `prompt`: the prompt @textbox
 
-          -   `entry`: the main entry @textbox
+    - `entry`: the main entry @textbox
 
-          -   `num-rows`: Shows the total number of rows.
+    - `num-rows`: Shows the total number of rows.
 
-          -   `num-filtered-rows`: Shows the total number of rows after
+    - `num-filtered-rows`: Shows the total number of rows after
               filtering.
 
-          -   `textbox-current-entry`: Shows the text of the currently selected
+    - `textbox-current-entry`: Shows the text of the currently selected
               entry.
 
-          -   `icon-current-entry`: Shows the icon of the currently selected
+    - `icon-current-entry`: Shows the icon of the currently selected
               entry.
 
-   -   `listview`: The listview.
+  - `listview`: The listview.
 
-       -   `scrollbar`: the listview scrollbar
+    - `scrollbar`: the listview scrollbar
 
-       -   `element`: a box in the listview holding the entries
+    - `element`: a box in the listview holding the entries
 
-	     -   `element-icon`: the widget in the listview's entry showing the
-		 (optional) icon
+      - `element-icon`: the widget in the listview's entry showing the
+   (optional) icon
 
-	     -   `element-index`: the widget in the listview's entry
-		 keybindable index (1,2,3..0)
+      - `element-index`: the widget in the listview's entry
+   keybindable index (1,2,3..0)
 
-	     -   `element-text`: the widget in the listview's entry showing the
-		 text.
+      - `element-text`: the widget in the listview's entry showing the
+   text.
 
-   -   `mode-switcher`: the main horizontal @box packing the buttons.
-       - `button`: the buttons @textbox for each mode
+  - `mode-switcher`: the main horizontal @box packing the buttons.
+    - `button`: the buttons @textbox for each mode
 
-   -   `message`: The container holding the textbox.
-       - `textbox`: the message textbox
+  - `message`: The container holding the textbox.
+    - `textbox`: the message textbox
 
 Note that these path names match the default theme. Themes that provide a
 custom layout will have different elements, and structure.
@@ -911,11 +914,13 @@ Currently only the entrybox and scrollbar have states:
 ```
 
 Where `visible modifier` can be:
+
 - normal: no modification
 - selected: the entry is selected/highlighted by user
 - alternate: the entry is at an alternating row (uneven row)
 
 Where `state` is:
+
 - normal: no modification
 - urgent: this entry is marked urgent
 - active: this entry is marked active
@@ -944,60 +949,60 @@ This allows the colors used for drawing the handle to be set independently.
 
 The following properties are currently supported:
 
-###  all widgets
+### all widgets
 
--   **enabled**:           enable/disable rendering of the widget
+- **enabled**:           enable/disable rendering of the widget
 
--   **padding**:           padding
+- **padding**:           padding
     Padding on the inside of the widget
 
--   **margin**:            padding
+- **margin**:            padding
     Margin on the outside of the widget
 
--   **border**:            border
+- **border**:            border
     Border around the widget (between padding and margin)/
 
--   **border-radius**:     padding
+- **border-radius**:     padding
     Sets a radius on the corners of the borders.
 
--   **background-color**:  color
+- **background-color**:  color
     Background color
 
--   **background-image**:  image
+- **background-image**:  image
     Background image
 
--   **border-color**:      color
+- **border-color**:      color
     Color of the border
 
--   **cursor**:            cursor
+- **cursor**:            cursor
     Type of mouse cursor that is set when the mouse pointer is hovered over the
     widget.
 
 ### window
 
--   **font**:            string
+- **font**:            string
     The font used in the window
 
--   **transparency**:    string
+- **transparency**:    string
     Indicating if transparency should be used and what type:
-    - **real** - True transparency. Only works with a compositor.
-    - **background** - Take a screenshot of the background image and use that.
-    - **screenshot** - Take a screenshot of the screen and use that.
-    - **Path** to png file - Use an image.
+  - **real** - True transparency. Only works with a compositor.
+  - **background** - Take a screenshot of the background image and use that.
+  - **screenshot** - Take a screenshot of the screen and use that.
+  - **Path** to png file - Use an image.
 
--   **location**:       position
+- **location**:       position
       The place of the anchor on the monitor
 
--   **anchor**:         anchor
+- **anchor**:         anchor
       The anchor position on the window
 
--   **fullscreen**:     boolean Window is fullscreen.
+- **fullscreen**:     boolean Window is fullscreen.
 
--   **width**:          distance The width of the window
+- **width**:          distance The width of the window
 
--   **x-offset**:       distance
+- **x-offset**:       distance
 
--   **y-offset**:       distance The offset of the window to the anchor point,
+- **y-offset**:       distance The offset of the window to the anchor point,
     allowing you to push the window left/right/up/down
 
 ### scrollbar Properties
@@ -1014,102 +1019,103 @@ The following properties are currently supported:
 
 ### textbox
 
--   **background-color**:  color
+- **background-color**:  color
 
--   **border-color**:      the color used for the border around the widget.
+- **border-color**:      the color used for the border around the widget.
 
--   **font**:              the font used by this textbox (string).
+- **font**:              the font used by this textbox (string).
 
--   **str**/**content**:   the string to display by this textbox (string).
+- **str**/**content**:   the string to display by this textbox (string).
 
--   **vertical-align**:    Vertical alignment of the text. A number between 0
+- **vertical-align**:    Vertical alignment of the text. A number between 0
     (top) and 1 (bottom).
 
--   **horizontal-align**:  Horizontal alignment of the text. A number between 0
+- **horizontal-align**:  Horizontal alignment of the text. A number between 0
     (left) and 1 (right).
 
--   **text-color**:        the text color to use.
+- **text-color**:        the text color to use.
 
--   **text-transform**:    text style {color} for the whole text.
+- **text-transform**:    text style {color} for the whole text.
 
--   **highlight**:         text style {color}. color is optional, multiple
+- **highlight**:         text style {color}. color is optional, multiple
     highlight styles can be added like: bold underline italic #000000; This
     option is only available on the `element-text` widget.
 
--   **width**:             override the desired width for the textbox.
+- **width**:             override the desired width for the textbox.
 
--   **content**:           Set the displayed text (String).
+- **content**:           Set the displayed text (String).
 
--   **placeholder**:       Set the displayed text (String) when nothing is
+- **placeholder**:       Set the displayed text (String) when nothing is
     entered.
 
--   **placeholder-markup**:       If true, placeholder text supports pango
+- **placeholder-markup**:       If true, placeholder text supports pango
     markup for stylizing.
 
--   **placeholder-color**: Color of the placeholder text.
+- **placeholder-color**: Color of the placeholder text.
 
--   **blink**:             Enable/Disable blinking on an input textbox
+- **blink**:             Enable/Disable blinking on an input textbox
     (Boolean).
 
--   **markup**:            Force markup on, beware that only valid pango markup
+- **markup**:            Force markup on, beware that only valid pango markup
     strings are shown.
 
--   **tab-stops**:         array of distances. Set the location of tab stops by
+- **tab-stops**:         array of distances. Set the location of tab stops by
     their distance from the beginning of the line. Each distance should be
     greater than the previous one. The text appears to the right of the tab
     stop position (other alignments are not supported yet).
 
--   **cursor-width**:      The width of the cursor.
+- **cursor-width**:      The width of the cursor.
 
--   **cursor-color**:      The color used to draw the cursor.
+- **cursor-color**:      The color used to draw the cursor.
 
--   **cursor-outline**:      Enable a border (outline) around the cursor.
+- **cursor-outline**:      Enable a border (outline) around the cursor.
     (Boolean)
 
--   **cursor-outline-width**: The width of the border around the cursor.
+- **cursor-outline-width**: The width of the border around the cursor.
     (Double)
 
--   **cursor-outline-color**: The color to use for the cursor outline.
+- **cursor-outline-color**: The color to use for the cursor outline.
     (Color)
 
--   **text-outline**:      Enable a border (outline) around the text. (Boolean)
+- **text-outline**:      Enable a border (outline) around the text. (Boolean)
 
--   **text-outline-width**: The width of the border around the text.  (Double)
+- **text-outline-width**: The width of the border around the text.  (Double)
 
--   **text-outline-color**: The color to use for the text outline.    (Color)
+- **text-outline-color**: The color to use for the text outline.    (Color)
 
 ### listview
--   **columns**:         integer Number of columns to show (at least 1)
 
--   **fixed-height**:    boolean Always show `lines` rows, even if fewer
+- **columns**:         integer Number of columns to show (at least 1)
+
+- **fixed-height**:    boolean Always show `lines` rows, even if fewer
     elements are available.
 
--   **dynamic**:         boolean `True` if the size should change when filtering
+- **dynamic**:         boolean `True` if the size should change when filtering
     the list, `False` if it should keep the original height.
 
--   **scrollbar**:       boolean If the scrollbar should be enabled/disabled.
+- **scrollbar**:       boolean If the scrollbar should be enabled/disabled.
 
--   **scrollbar-width**: distance Width of the scrollbar
+- **scrollbar-width**: distance Width of the scrollbar
 
--   **cycle**:           boolean When navigating, it should wrap around
+- **cycle**:           boolean When navigating, it should wrap around
 
--   **spacing**:         distance Spacing between the elements (both vertical
+- **spacing**:         distance Spacing between the elements (both vertical
     and horizontal)
 
--   **lines**:           integer Number of rows to show in the list view.
+- **lines**:           integer Number of rows to show in the list view.
 
--   **layout**:           orientation Indicate how elements are stacked.
+- **layout**:           orientation Indicate how elements are stacked.
     Horizontal implements the dmenu style.
 
--   **reverse**:         boolean Reverse the ordering (top down to bottom up).
+- **reverse**:         boolean Reverse the ordering (top down to bottom up).
 
--   **flow**:           orientation The order the elements are layed out.
+- **flow**:           orientation The order the elements are layed out.
     Vertical is the original 'column' view.
 
--   **fixed-columns**:    boolean Do not reduce the number of columns shown when
+- **fixed-columns**:    boolean Do not reduce the number of columns shown when
     number of visible elements is not enough to fill them all.
 
--   **require-input**:    boolean Listview requires user input to be unhidden.
+- **require-input**:    boolean Listview requires user input to be unhidden.
     The list is still present and hitting accept will activate the first entry.
 
 ## Listview widget
@@ -1117,9 +1123,9 @@ The following properties are currently supported:
 The listview widget is special container widget.
 It has the following fixed children widgets:
 
--   0 or more `element` widgets of the type box.
+- 0 or more `element` widgets of the type box.
 
--   An optional `scrollbar` widget. This can be enabled using the scrollbar
+- An optional `scrollbar` widget. This can be enabled using the scrollbar
     property.
 
 These cannot be changed using the `children` property.
@@ -1215,6 +1221,7 @@ The current layout of **rofi** is structured as follows:
 
 
 ```
+>
 > - ci is the case-indicator
 > - fr is the num-filtered-rows
 > - ns is the num-rows
@@ -1390,15 +1397,15 @@ Just like CSS, **rofi** uses the box model for each widget.
 
 Explanation of the different parts:
 
--   Content - The content of the widget.
+- Content - The content of the widget.
 
--   Padding - Clears an area around the widget. The padding shows the
+- Padding - Clears an area around the widget. The padding shows the
     background color of the widget.
 
--   Border - A border that goes around the padding and content. The border use
+- Border - A border that goes around the padding and content. The border use
     the border-color of the widget.
 
--   Margin - Clears an area outside the border. The margin is transparent.
+- Margin - Clears an area outside the border. The margin is transparent.
 
 The box model allows us to add a border around elements, and to define space
 between elements.
@@ -1594,7 +1601,7 @@ A typical example:
 
 "Cantarell Italic Light 15 \`wght`=200"
 
-## Icon Handling 
+## Icon Handling
 
 Rofi supports 3 ways of specifying an icon:
 
@@ -1618,6 +1625,7 @@ Getting supported icon formats:
 ```bash
 G_MESSAGES_DEBUG=Helpers.IconFetcher rofi
 ```
+
 This uses the debug framework and prints out a list of supported image  file
 extensions.
 
@@ -1647,7 +1655,8 @@ If a filename is provided, it will try to resolve it in the following order:
 - `${XDG_DATA_HOME}/rofi/themes/`
 - `${INSTALL PREFIX}/share/rofi/themes/`
 
-A name is resolved (if it has no valid extension) as a filename by appending the `.rasi` extension.
+A name is resolved (if it has no valid extension) as a filename by appending the `.rasi` and the `.rasinc` extension.
+It will first look for files with `.rasi`, then for files with `.rasinc`.
 
 ## Examples
 
